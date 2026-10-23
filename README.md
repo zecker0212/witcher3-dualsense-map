@@ -1,5 +1,42 @@
 # Witcher 3 DualSense Touchpad
 
+[English](#english) · [한국어](#한국어) · [English guide](GUIDE.en.md) · [한글 설명서](사용설명서.md)
+
+## English
+
+A Windows installer and restore tool for DualSense touchpad shortcuts in **The Witcher 3 on Steam**, using the game's native controller support with **Steam Input disabled**.
+
+- **Short touchpad click:** open the world map on release.
+- **Hold for 0.3 seconds:** open the inventory.
+- **Gamepad button prompts stay enabled**, including while using the touchpad. Prompts will also remain in gamepad mode when using a keyboard or mouse.
+- Touchpad swipe gestures are not added. Other controller buttons sharing the same menu action may also open the map.
+
+### Install
+
+1. Select **Code → Download ZIP**, then extract it to a writable folder.
+2. Launch the game once and exit completely to create its settings files.
+3. Disable **Steam Input** for this game in Steam's controller settings.
+4. Double-click `Install.cmd`. The tool detects Steam library folders; select the game or settings folder if prompted.
+5. Start the game and check map opening/closing, inventory access, and PlayStation button prompts.
+
+### Restore
+
+Close the game and run `Restore.cmd` from the same extracted folder. With an installation record, it restores the previous UI setting. Without a record, it disables the recognized mod and removes the gamepad UI lock. Other settings and saves are preserved.
+
+[Read the full English guide](GUIDE.en.md) for backups, updates, troubleshooting, and manual removal.
+
+### Compatibility and privacy
+
+The installer creates a separate mod from your locally installed game script; this repository does not distribute original game scripts. It leaves the original game files and `input.settings` unchanged. It stops if it detects an unexpected script layout or another conflicting input mod. Future game versions and all PC configurations are not guaranteed to work.
+
+Gameplay was confirmed on the author's test PC; installation and restoration were tested separately with Windows PowerShell. After a game update, restore first and reinstall to regenerate the mod from the updated game files.
+
+Keep `Backups/` and `installation.json` private: they can contain game code, settings, and personal paths. They are excluded by `.gitignore`. For a new PC or Windows installation, extract a fresh copy of the ZIP instead of reusing an old installation record.
+
+Unofficial community tool. Not affiliated with CD PROJEKT RED, Sony, or Valve.
+
+## 한국어
+
 위쳐 3 PC Steam 버전에서 Steam Input 없이 듀얼센스 터치패드 단축키를 사용하기 위한 Windows 설치·복원 도구입니다.
 
 ## 기능
