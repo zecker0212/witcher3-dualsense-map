@@ -1,77 +1,52 @@
-# Witcher 3 DualSense Touchpad
+# Witcher 3 DualSense — v1.0.1
 
-[English](#english) · [한국어](#한국어) · [English guide](GUIDE.en.md) · [한글 설명서](사용설명서.md)
-
-## English
-
-A Windows installer and restore tool for DualSense touchpad shortcuts in **The Witcher 3 on Steam**, using the game's native controller support with **Steam Input disabled**.
-
-- **Short touchpad click:** open the world map on release.
-- **Hold for 0.3 seconds:** open the inventory.
-- **Gamepad button prompts stay enabled**, including while using the touchpad. Prompts will also remain in gamepad mode when using a keyboard or mouse.
-- Touchpad swipe gestures are not added. Other controller buttons sharing the same menu action may also open the map.
-
-### Install
-
-1. Select **Code → Download ZIP**, then extract it to a writable folder.
-2. Launch the game once and exit completely to create its settings files.
-3. Disable **Steam Input** for this game in Steam's controller settings.
-4. Double-click `Install.cmd`. The tool detects Steam library folders; select the game or settings folder if prompted.
-5. Start the game and check map opening/closing, inventory access, and PlayStation button prompts.
-
-### Restore
-
-Close the game and run `Restore.cmd` from the same extracted folder. With an installation record, it restores the previous UI setting. Without a record, it disables the recognized mod and removes the gamepad UI lock. Other settings and saves are preserved.
-
-[Read the full English guide](GUIDE.en.md) for backups, updates, troubleshooting, and manual removal.
-
-### Compatibility and privacy
-
-The installer creates a separate mod from your locally installed game script; this repository does not distribute original game scripts. It leaves the original game files and `input.settings` unchanged. It stops if it detects an unexpected script layout or another conflicting input mod. Future game versions and all PC configurations are not guaranteed to work.
-
-Gameplay was confirmed on the author's test PC; installation and restoration were tested separately with Windows PowerShell. After a game update, restore first and reinstall to regenerate the mod from the updated game files.
-
-Keep `Backups/` and `installation.json` private: they can contain game code, settings, and personal paths. They are excluded by `.gitignore`. For a new PC or Windows installation, extract a fresh copy of the ZIP instead of reusing an old installation record.
-
-Unofficial community tool. Not affiliated with CD PROJEKT RED, Sony, or Valve.
+[English guide](GUIDE.en.md) · [한국어 설명서](사용설명서.md)
 
 ## 한국어
 
-위쳐 3 PC Steam 버전에서 Steam Input 없이 듀얼센스 터치패드 단축키를 사용하기 위한 Windows 설치·복원 도구입니다.
+Steam Input을 끄고 USB 듀얼센스를 사용하는 위쳐 3 PC Steam 버전용 설정 설치·원복 도구입니다.
 
-## 기능
+| 입력 | 동작 |
+|---|---|
+| 옵션 짧게 | 기존 일시정지 메뉴 |
+| 옵션 0.5초 길게 | 지도 |
+| 터치패드 짧게 / 길게 | 원본 유지: 메뉴 / 소지품 |
 
-- 터치패드 짧게 클릭: 월드 맵
-- 0.3초 이상 길게 누르기: 소지품
-- 패드 버튼 안내 고정: 터치패드 입력 중 키보드 안내로 전환되는 현상을 방지
-- 스와이프 기능은 추가하지 않습니다.
+패드 버튼 안내를 고정합니다. 키보드·마우스를 사용해도 안내는 패드 기준으로 유지됩니다. 스와이프와 캡처 버튼 기능은 추가하지 않습니다.
 
-## 설치
+### 설치
 
-1. 저장소의 **Code → Download ZIP**으로 내려받아 압축을 해제합니다.
-2. 게임을 한 번 실행하고 완전히 종료합니다.
-3. Steam에서 이 게임의 **Steam Input을 끕니다**.
-4. `Install.cmd`를 실행합니다. 폴더를 자동으로 찾지 못하면 게임 폴더 또는 문서의 설정 폴더를 선택합니다.
-5. 게임을 실행해 단축키와 버튼 안내를 확인합니다.
+1. **v1.0.0 사용자는 먼저 기존 v1.0.0 폴더의 Restore.cmd로 원복하세요.** 기존 터치패드 모드를 남기면 터치패드가 계속 지도를 엽니다. v1.0.1은 기존 모드를 자동으로 삭제하지 않습니다. 실험용 스와이프 도구도 종료하고 제거하세요.
+2. [v1.0.1 Releases](https://github.com/zecker0212/witcher3-dualsense-touchpad/releases/tag/v1.0.1)에서 `Witcher3-DualSense-Setup-v1.0.1.zip`을 내려받아 쓰기 가능한 새 폴더에 압축을 풉니다. 이전 버전 폴더에 덮어쓰지 마세요.
+3. 게임을 한 번 실행한 뒤 완전히 종료합니다. Steam Input은 끄고 듀얼센스는 USB로 연결합니다.
+4. `Install.cmd`를 실행합니다. 설정 폴더를 찾지 못하면 `문서\The Witcher 3` 폴더를 선택합니다.
+5. 게임에서 옵션 짧게/길게, 터치패드, 지도를 열고 닫을 때의 패드 안내를 확인합니다.
 
-키보드·마우스를 사용해도 안내는 패드용으로 유지됩니다. 다른 패드 버튼도 같은 메뉴 명령을 공유하면 지도를 열 수 있습니다.
+상주 프로그램, Steam Input, 게임 모드는 필요 없습니다. 설치 도구는 설정을 저장한 뒤 종료됩니다. 다른 사람도 자신의 설정 파일에 적용할 수 있습니다.
 
-## 원복
+### 변경 및 원복
 
-게임을 종료하고 `Restore.cmd`를 실행합니다. 설치 기록이 있으면 설치 직전 UI 설정으로 복원합니다. 기록이 없으면 알려진 모드를 비활성화하고 패드 UI 고정을 해제합니다. 다른 설정과 세이브는 유지합니다.
+- `input.settings`: 기존 옵션 일시정지 항목이 있는 각 구간에 `IK_PS4_OPTIONS=(Action=PanelMap,State=Duration,IdleTime=0.5)`만 추가합니다.
+- `user.settings`, `dx12user.settings`: 존재하는 파일의 `[Hidden]` 구간에서 `LockControlScheme=1`만 설정합니다.
+- 터치패드, 세이브, 게임 원본 파일은 수정하지 않습니다. 전체 설정을 배포본으로 덮어쓰지 않습니다.
+- 게임 종료 후 **설치에 썼던 같은 폴더의 `Restore.cmd`**를 실행하면 이번 설치가 변경한 항목만 설치 직전 값으로 복원합니다. 이후 바꾼 다른 설정은 유지합니다.
+- 이미 같은 설정이 있던 항목은 원복 시 유지합니다. 설치 후 해당 항목이 다른 값으로 바뀌었다면 덮어쓰지 않고 중단합니다.
+- `Backups/`와 `installation.json`을 보관하세요. 개인 경로와 설정이 들어갈 수 있으므로 공유하지 마세요. Windows 재설치나 다른 PC에서는 ZIP을 새로 풀어 설치하세요.
 
-[전체 한글 설명서](사용설명서.md)
+현재 사용자 PC에서 실제 동작을 확인했습니다. 배포 도구의 설치·원복은 별도 시험 설정으로 검증했습니다. 다른 입력 모드, 변경된 옵션 버튼 배치, 향후 게임 버전은 추가 확인이 필요합니다.
 
-## 배포 방식과 호환성
+## English
 
-게임 원본 스크립트는 포함하지 않습니다. 설치 도구가 사용자의 설치된 게임 파일에서 필요한 부분만 수정한 별도 모드를 생성합니다. 원본 게임 파일과 `input.settings`는 바꾸지 않습니다.
+A settings-only installer and restore tool for The Witcher 3 on Steam with a USB DualSense and **Steam Input disabled**.
 
-현재 테스트한 PC에서는 실제 플레이 동작을 확인했습니다. 설치·복원 도구는 Windows PowerShell에서 별도 테스트 폴더로 검증했습니다. 모든 PC나 미래 게임 업데이트에서의 동작은 보장하지 않으며, 예상하지 못한 게임 코드 구조나 충돌 입력 모드를 발견하면 설치를 중단합니다.
+- Tap **Options**: original pause menu.
+- Hold **Options for 0.5 seconds**: world map.
+- **Touchpad unchanged**: original menu on tap, inventory on hold.
+- Keeps gamepad prompts visible, including when using keyboard/mouse.
+- No swipe or Create-button support; no background helper or game mod.
 
-게임 업데이트 후에는 먼저 복원한 뒤 다시 설치하여 업데이트된 원본에서 모드를 생성하세요.
+**Upgrading from v1.0.0:** restore using the old version's `Restore.cmd` first. v1.0.1 does not remove old mods. Extract this version to a fresh folder, close the game, then run `Install.cmd`. Run `Restore.cmd` from that same folder to undo only changes made by this installation. Keep its private `Backups/` and `installation.json` locally.
 
-## 개인 파일
+The tool patches only the Options hold binding and `[Hidden] LockControlScheme` in the existing settings files. It preserves touchpad bindings, unrelated settings, saves, and original game files. See the [English guide](GUIDE.en.md) for recovery and troubleshooting.
 
-`Backups/`와 `installation.json`은 설치 시 생성되는 개인 파일입니다. 게임 코드, 설정, 개인 경로가 포함될 수 있으므로 GitHub에 올리거나 다른 사람에게 전달하지 마세요. 이 저장소는 해당 파일을 `.gitignore`로 제외합니다.
-
-비공식 개인 제작 도구이며 CD PROJEKT RED, Sony 또는 Valve와 관련된 공식 제품이 아닙니다.
+Unofficial community tool; not affiliated with CD PROJEKT RED, Sony, or Valve.
