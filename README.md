@@ -1,6 +1,10 @@
-# Witcher 3 DualSense — v1.0.1
+# Witcher 3 DualSense — v1.0.2
 
 [English guide](GUIDE.en.md) · [한국어 설명서](사용설명서.md)
+
+**v1.0.2 수정:** `[Hidden]` 구간이 없는 설정 파일도 자동으로 구간을 추가하여 설치합니다. v1.0.1에서 `Hidden section missing` 오류가 났다면 게임을 종료하고 이 버전을 새 폴더에 풀어 설치하세요. 해당 오류는 파일 저장 전에 발생하므로 별도 원복이 필요 없습니다. v1.0.1이 이미 정상 동작한다면 업데이트할 필요는 없습니다.
+
+**v1.0.2 fix:** Creates `[Hidden]` when absent. If v1.0.1 stopped with `Hidden section missing`, close the game and install this version from a fresh extraction; that error occurred before any settings were written. Working v1.0.1 installations do not need this update. Restore removes a newly created empty section but preserves any settings added there later.
 
 ## 한국어
 
@@ -16,8 +20,8 @@ Steam Input을 끄고 USB 듀얼센스를 사용하는 위쳐 3 PC Steam 버전�
 
 ### 설치
 
-1. **v1.0.0 사용자는 먼저 기존 v1.0.0 폴더의 Restore.cmd로 원복하세요.** 기존 터치패드 모드를 남기면 터치패드가 계속 지도를 엽니다. v1.0.1은 기존 모드를 자동으로 삭제하지 않습니다. 실험용 스와이프 도구도 종료하고 제거하세요.
-2. [v1.0.1 Releases](https://github.com/zecker0212/witcher3-dualsense-touchpad/releases/tag/v1.0.1)에서 `Witcher3-DualSense-Setup-v1.0.1.zip`을 내려받아 쓰기 가능한 새 폴더에 압축을 풉니다. 이전 버전 폴더에 덮어쓰지 마세요.
+1. **v1.0.0 사용자는 먼저 기존 v1.0.0 폴더의 Restore.cmd로 원복하세요.** 기존 터치패드 모드를 남기면 터치패드가 계속 지도를 엽니다. v1.0.2은 기존 모드를 자동으로 삭제하지 않습니다. 실험용 스와이프 도구도 종료하고 제거하세요.
+2. [v1.0.2 Releases](https://github.com/zecker0212/witcher3-dualsense-map/releases/tag/v1.0.2)에서 `Witcher3-DualSense-Setup-v1.0.2.zip`을 내려받아 쓰기 가능한 새 폴더에 압축을 풉니다. 이전 버전 폴더에 덮어쓰지 마세요.
 3. 게임을 한 번 실행한 뒤 완전히 종료합니다. Steam Input은 끄고 듀얼센스는 USB로 연결합니다.
 4. `Install.cmd`를 실행합니다. 설정 폴더를 찾지 못하면 `문서\The Witcher 3` 폴더를 선택합니다.
 5. 게임에서 옵션 짧게/길게, 터치패드, 지도를 열고 닫을 때의 패드 안내를 확인합니다.
@@ -45,7 +49,7 @@ A settings-only installer and restore tool for The Witcher 3 on Steam with a USB
 - Keeps gamepad prompts visible, including when using keyboard/mouse.
 - No swipe or Create-button support; no background helper or game mod.
 
-**Upgrading from v1.0.0:** restore using the old version's `Restore.cmd` first. v1.0.1 does not remove old mods. Extract this version to a fresh folder, close the game, then run `Install.cmd`. Run `Restore.cmd` from that same folder to undo only changes made by this installation. Keep its private `Backups/` and `installation.json` locally.
+**Upgrading from v1.0.0:** restore using the old version's `Restore.cmd` first. v1.0.2 does not remove old mods. Extract this version to a fresh folder, close the game, then run `Install.cmd`. Run `Restore.cmd` from that same folder to undo only changes made by this installation. Keep its private `Backups/` and `installation.json` locally.
 
 The tool patches only the Options hold binding and `[Hidden] LockControlScheme` in the existing settings files. It preserves touchpad bindings, unrelated settings, saves, and original game files. See the [English guide](GUIDE.en.md) for recovery and troubleshooting.
 

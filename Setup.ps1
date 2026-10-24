@@ -18,10 +18,16 @@ try {
     if($Action -eq 'Uninstall') {
         if(!(Test-Path -LiteralPath $statePath)){throw 'No installation.json. Use the same folder used to install. See README for manual restore.'}
         $state=Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json
-        if($state.Version -ne '1.0.1'){throw 'Use the matching older version to restore first.'}
+        if($state.Version -notin @('1.0.1','1.0.2')){throw 'Use the matching older version to restore first.'}
         foreach($f in $state.Files){
             $before=[IO.File]::ReadAllText($f.Path); $after=$before
             foreach($e in $f.Edits){$after=Replace-Section $after $e.Section $e.After $e.Before}
+            if($f.CreatedHidden){
+                $hidden=@(Sections $after | Where-Object {$_.Groups[1].Value -ceq 'Hidden'})
+                if($hidden.Count -eq 1 -and $hidden[0].Value -match '^\[Hidden\]\r?\n\s*$'){
+                    $after=$after.Remove($hidden[0].Index,$hidden[0].Length)
+                }
+            }
             $changes+=@{Path=$f.Path;Before=$before;After=$after;Bom=$f.Bom}
         }
     } else {
@@ -43,7 +49,7 @@ try {
             $raw=[IO.File]::ReadAllBytes($path)
             if($raw.Length -gt 1 -and (($raw[0] -eq 255 -and $raw[1] -eq 254) -or ($raw[0] -eq 254 -and $raw[1] -eq 255))){throw 'UTF-16 settings are unsupported; no files changed.'}
             $bom=$raw.Length -ge 3 -and $raw[0] -eq 239 -and $raw[1] -eq 187 -and $raw[2] -eq 191
-            $before=[IO.File]::ReadAllText($path); $after=$before; $edits=@()
+            $before=[IO.File]::ReadAllText($path); $after=$before; $edits=@(); $createdHidden=$false
             $sections=@(Sections $before)
             if(@($sections | Group-Object {$_.Groups[1].Value} | Where-Object Count -gt 1).Count){throw 'Duplicate settings sections.'}
             foreach($s in $sections){
@@ -71,15 +77,21 @@ try {
                     } else {$edits+=@{Section=$s.Groups[1].Value;Before=$old;After=$new}}
                 }
             }
-            if($name -ne 'input.settings' -and !(@($sections | Where-Object {$_.Groups[1].Value -ceq 'Hidden'}).Count)){throw "Hidden section missing in $name. Launch and exit the game first."}
-            $files+=@{Path=$path;Bom=$bom;Edits=@($edits)}
+            if($name -ne 'input.settings' -and !(@($sections | Where-Object {$_.Groups[1].Value -ceq 'Hidden'}).Count)){
+                $nl="`r`n"; if($before.Contains("`n") -and !$before.Contains("`r`n")){$nl="`n"}
+                $line='LockControlScheme=1'+$nl
+                $after='[Hidden]'+$nl+$line+$after
+                $createdHidden=$true
+                $edits+=@{Section='Hidden';Before='';After=$line}
+            }
+            $files+=@{Path=$path;Bom=$bom;Edits=@($edits);CreatedHidden=$createdHidden}
             $changes+=@{Path=$path;Before=$before;After=$after;Bom=$bom}
         }
         if($pauseCount -eq 0 -or $files.Count -lt 2){throw 'Expected game settings not found. Launch and exit the game first.'}
         $backup=Join-Path $PSScriptRoot ('Backups\'+(Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
         New-Item -ItemType Directory -Path $backup -Force | Out-Null
         foreach($f in $files){Copy-Item -LiteralPath $f.Path -Destination $backup}
-        $state=@{Version='1.0.1';BackupPath=$backup;Files=@($files)}
+        $state=@{Version='1.0.2';BackupPath=$backup;Files=@($files)}
     }
     $written=@()
     try {
@@ -95,7 +107,7 @@ try {
         foreach($c in $written){Save $c.Path $c.Before $c.Bom}
         throw
     }
-    Write-Host "$Action completed. v1.0.1" -ForegroundColor Green
+    Write-Host "$Action completed. v1.0.2" -ForegroundColor Green
     if($Action -eq 'Install'){Write-Host 'Options: tap = pause; hold 0.5 seconds = map. Touchpad unchanged. Gamepad prompts locked.'}
     exit 0
 } catch {Write-Host $_.Exception.Message -ForegroundColor Red; exit 1}
